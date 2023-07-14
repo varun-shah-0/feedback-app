@@ -1,29 +1,27 @@
+import { useState } from "react";
 import Header from "./components/Header";
-import FeedbackItem from "./components/FeedbackItem/";
 import data from "./data.json";
-import axios from "axios";
-import { useEffect } from "react";
-
-const name = "Feedback React App";
+import FeedbackList from "./components/FeedbackList";
+import FeedbackStats from "./components/FeedbackStats";
+import FeedbackForm from "./components/FeedbackForm";
 
 const App = () => {
-  console.log(data);
-  useEffect(() => {
-    // async function fetchData() {
-    //   // You can await here
-    //   const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-    //   // ...
-    //   console.log(await response.json());
-    // }
-    //fetchData();
-    console.log("123");
-  }, []);
+  const [feedbackList, setFeedbackList] = useState(data);
+
+  const handleClick = (id) => {
+    setFeedbackList(feedbackList.filter((item) => item.id !== id));
+  };
+  const handleAdd = (newFeedback) => {
+    setFeedbackList([newFeedback, ...feedbackList]);
+  };
   return (
     <>
       <Header />
-      {data.map((feedback, index) => {
-        return <FeedbackItem data={feedback} key={index} />;
-      })}
+      <div className='container'>
+        <FeedbackStats data={feedbackList} />
+        <FeedbackForm handleAdd={handleAdd} />
+        <FeedbackList data={feedbackList} handleClick={handleClick} />
+      </div>
     </>
   );
 };
