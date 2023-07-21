@@ -228,3 +228,6 @@ input:focus {
     width: 80%;
   }
 }
+.active{
+  color: red;
+}
